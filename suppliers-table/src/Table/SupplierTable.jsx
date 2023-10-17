@@ -3,6 +3,26 @@ import { supplierData } from "../Data/suppliersData";
 
 function SupplierTable() {
   const [supplier, setsupplier] = useState(supplierData);
+  const [order, setorder] = useState("ASC")
+
+  const sorting=(col)=> {
+    if (order ==="ASC"){
+      const sorted = [...supplier].sort((a,b)=>
+      a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      setsupplier(sorted);
+      setorder("DESC")
+    }
+
+    if (order ==="DESC"){
+      const sorted = [...supplier].sort((a,b)=>
+      a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setsupplier(sorted);
+      setorder("ASC")
+    }
+
+  }
 
   const deleteSupplier = (id) => {
     var result = window.confirm("Want to delete?");
@@ -14,12 +34,12 @@ function SupplierTable() {
 
   return (
     <>
-      <h1>Length: </h1>
-      <table className="w3-table w3-stiped">
+      <h1>Length: {supplier.length}</h1>
+      <table className="table w3-stiped table-bordered">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Company Name</th>
+            <th onClick={()=>sorting("companyName")}>Company Name</th>
             <th>Contact Name</th>
             <th>Contact Title</th>
             <th>Country</th>
